@@ -9,8 +9,17 @@ This project analyzes Coca-Cola sales data using cleaned data, SQL for advanced 
 
 - The dataset used in this project is a cleaned Coca-Cola sales dataset provided in CSV format. It contains detailed records of sales transactions, including product names, quantities, sales          amounts, shipment details, salespeople, and regional information.
 
-  ### Tools Used
+### Tools Used
 
 1. Microsoft Excel – for preliminary data inspection and validation. [Download Here](https://config.office.com/deploymentsettings)
 2. SQL – for advanced querying, aggregation, and statistical analysis. [Download Here](https://learn.microsoft.com/en-us/ssms/)
 3. Tableau – for creating interactive dashboards and visualizations to communicate insights. [Download Here](https://www.tableau.com/community/public)
+
+### Exploratory Data Analysis (EDA)
+
+- Analyzed sales distribution across countries and product categories.
+- Identified top-performing salespeople by total sales.
+- Segment customers (RFM + CLTV) and identify high-value cohorts.
+- Examined seasonal trends to detect peak demand months.
+- Conducted a correlation analysis between Sales Amount and Boxes Shipped.
+- Reviewed outliers and fluctuations for potential business insights.
