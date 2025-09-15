@@ -18,8 +18,54 @@ This project analyzes Coca-Cola sales data using cleaned data, SQL for advanced 
 ### Exploratory Data Analysis (EDA)
 
 - Analyzed sales distribution across countries and product categories.
-- Identified top-performing salespeople by total sales.
-- Segment customers (RFM + CLTV) and identify high-value cohorts.
+- Identified top-5 performing Beverage Brand and states by total sales.
 - Examined seasonal trends to detect peak demand months.
-- Conducted a correlation analysis between Sales Amount and Boxes Shipped.
+- Compared brand-level contributions to overall revenue.
 - Reviewed outliers and fluctuations for potential business insights.
+
+### Data Analysis
+
+- Analyzed sales distribution across countries and product categories.
+  ```sql
+    SELECT 
+    [State],
+    [Beverage Brand] AS ProductCategory,
+    SUM(TRY_CAST(REPLACE(REPLACE([Price per Unit], '$',''), ',', '') AS DECIMAL(18,2))) AS Total_Sales,
+    SUM(TRY_CAST(REPLACE([Units Sold], ',', '') AS INT)) AS Total_Units
+
+    FROM [dbo].[CocaCola]
+    
+    WHERE ISNUMERIC(REPLACE([Units Sold], ',', '')) = 1
+    GROUP BY [State], [Beverage Brand]
+    ORDER BY [State], Total_Sales DESC;
+  ```
+- Identified top-5 performing Beverage Brand and states by total sales.
+  ```sql
+    SELECT TOP 5
+    [State], [Beverage Brand],
+    SUM(TRY_CAST(REPLACE(REPLACE([Units Sold], '$',''), ',', '') AS DECIMAL(18,2))) AS Total_Sales
+    FROM [dbo].[CocaCola]
+    GROUP BY [Beverage Brand],[State]
+    ORDER BY Total_Sales DESC;
+  ```
+- Examined seasonal trends to detect peak demand months.
+  ```sql
+    SELECT 
+    DATENAME(MONTH, [Date]) AS Month,
+    SUM(TRY_CAST(REPLACE(REPLACE([Units Sold], '$',''), ',', '') AS DECIMAL(18,2))) AS Total_Sales
+    FROM [dbo].[CocaCola]
+        
+    WHERE TRY_CAST([Date] AS DATE) IS NOT NULL
+    GROUP BY DATENAME(MONTH, [Date]), MONTH([Date])
+    ORDER BY MONTH([Date]) ASC;
+  ```
+- Compared brand-level contributions to overall revenue.
+  ```sql
+    SELECT 
+    [Beverage Brand],
+    SUM(TRY_CAST(REPLACE(REPLACE([Units Sold], '$',''), ',', '') AS DECIMAL(18,2))) AS Total_Sales,
+    AVG(TRY_CAST(REPLACE(REPLACE([Units Sold], '$',''), ',', '') AS DECIMAL(18,2))) AS Avg_Sales
+    FROM [dbo].[CocaCola]
+    GROUP BY [Beverage Brand]
+    ORDER BY Total_Sales DESC;
+  ```
